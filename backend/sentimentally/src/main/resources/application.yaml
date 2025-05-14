@@ -1,0 +1,35 @@
+spring:
+  application:
+    name: sentimentally
+  datasource:
+    url: jdbc:postgresql://localhost:5432/sentimentally
+    username: "NAME"
+    password: "PASSWORD"
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+  ai:
+    vectorstore:
+      pgvector:
+        index-type: HNSW
+        distance-type: COSINE_DISTANCE
+        dimensions: 1536
+#    ollama:
+#      base-url: http://localhost:11434
+#      chat:
+#        options:
+#          model: llama3:latest
+#      embedding:
+#        enabled: true
+#        options:
+#          model: llama3:latest
+    openai:
+      api-key: "API_KEY"
+      embedding:
+        options:
+          model: text-embedding-3-small
+      chat:
+        options:
+          model: gpt-4o
