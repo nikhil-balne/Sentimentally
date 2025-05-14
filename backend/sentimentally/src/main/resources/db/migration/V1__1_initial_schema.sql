@@ -62,7 +62,7 @@ CREATE TABLE analysed_feedback (
     category_ids   INT[]         NOT NULL,
     rating         INT           NOT NULL,
     property_id    VARCHAR(10)   NOT NULL,
-    created_tsz    TIMESTAMP     NOT NULL,
+    created_tsz    TIMESTAMPTZ   NOT NULL,
 
     CONSTRAINT fk_property_analysis FOREIGN KEY (property_id) REFERENCES property(id)
 );
