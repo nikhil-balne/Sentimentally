@@ -97,6 +97,10 @@
 				<type>pom</type>
 				<scope>import</scope>
 			</dependency>
+			<dependency>
+				<groupId>org.flywaydb</groupId>
+				<artifactId>flyway-core</artifactId>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>
 	<build>
@@ -112,6 +116,28 @@
 						</exclude>
 					</excludes>
 				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>com.diffplug.spotless</groupId>
+				<artifactId>spotless-maven-plugin</artifactId>
+				<version>2.24.0</version>
+				<configuration>
+					<java>
+						<targetJdk>17</targetJdk>
+						<googleJavaFormat/>
+					</java>
+					<sql>
+						<googleJavaFormat/>
+					</sql>
+				</configuration>
+				<executions>
+					<execution>
+						<phase>validate</phase>
+						<goals>
+							<goal>apply</goal>
+						</goals>
+					</execution>
+				</executions>
 			</plugin>
 		</plugins>
 	</build>
