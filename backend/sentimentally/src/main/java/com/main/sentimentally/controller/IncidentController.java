@@ -3,6 +3,7 @@ package com.main.sentimentally.controller;
 import com.main.sentimentally.ai.IncidentAnalysisService;
 import com.main.sentimentally.dto.IncidentAIResponse;
 import com.main.sentimentally.dto.IncidentDTO;
+import com.main.sentimentally.dto.ResolveIncidentDTO;
 import com.main.sentimentally.entity.Incident;
 import com.main.sentimentally.entity.Property;
 import com.main.sentimentally.service.IncidentService;
@@ -39,5 +40,10 @@ public class IncidentController {
         incident.setCategory(incidentAIResponse.getCategory());
         incident.setSeverity(incidentAIResponse.getSeverity());
         return incidentService.saveIncident(incident);
+    }
+
+    @PutMapping("/")
+    public  Incident resolveIncident(@RequestBody ResolveIncidentDTO incidentDTO){
+        return incidentService.resolveIncident(incidentDTO);
     }
 }
