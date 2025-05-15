@@ -64,7 +64,9 @@ public class IncidentAnalysisService {
         }
         incidentAIResponse.setSeverity(severityService.findExistingSeverity(incidentAIRecord.severity(), severityList).get(0));
         incidentAIResponse.setSummary(incidentAIRecord.summary());
-        property.setFeedbackSummary("");
+        if(property.getIncidentSummary() == null || property.getIncidentSummary().isEmpty()){
+            property.setFeedbackSummary("");
+        }
         property.setIncidentSummary(incidentAIRecord.summary());
         propertyService.saveProperty(property);
         return incidentAIResponse;

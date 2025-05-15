@@ -32,4 +32,8 @@ public class FeedbackService {
 				startDate);
 	}
 
+	public  Feedback saveFeedback(Feedback feedback){
+		return  feedbackRepository.save(feedback);
+	}
+
 }

@@ -48,4 +48,19 @@ public class CategoryService {
 		return categoryList.stream().filter(cat -> inputNames.contains(cat.getName())).collect(Collectors.toList());
 	}
 
+	public String getCategoryNamesString(String categoryIds, List<Category> allCategories) {
+		if (categoryIds == null || categoryIds.isEmpty()) {
+			return "";
+		}
+
+		Map<Integer, String> idToNameMap = allCategories.stream()
+				.collect(Collectors.toMap(Category::getId, Category::getName));
+
+		return Arrays.stream(categoryIds.split(","))
+				.map(String::trim)
+				.map(idToNameMap::get)
+				.filter(Objects::nonNull)
+				.collect(Collectors.joining(", "));
+	}
+
 }
