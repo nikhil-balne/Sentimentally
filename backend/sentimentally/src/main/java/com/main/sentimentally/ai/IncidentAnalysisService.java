@@ -55,8 +55,10 @@ public class IncidentAnalysisService {
                     }
                     Now, process the following incident: {incident}
                 """;
-        String categories =  StringUtils.joinWithComma(categoryService.getAllCategories().stream().map(Category::getName).toArray(String[]::new));
-        String levels = StringUtils.joinWithComma(severityService.getAllSeverities().stream().map(Severity::getName).toArray(String[]::new));;
+        List<Category> categoryList = categoryService.getAllCategories();
+        List<Severity> severityList = severityService.getAllSeverities();
+        String categories =  StringUtils.joinWithComma(categoryList.stream().map(Category::getName).toArray(String[]::new));
+        String levels = StringUtils.joinWithComma(severityList.stream().map(Severity::getName).toArray(String[]::new));;
         IncidentAIResponse incidentAIResponse = new IncidentAIResponse();
         var outputParser = new BeanOutputConverter<>(IncidentAIRecord.class);
         String format = outputParser.getFormat();
@@ -71,8 +73,16 @@ public class IncidentAnalysisService {
         assert generation != null;
         IncidentAIRecord incidentAIRecord = outputParser.convert(generation);
         assert incidentAIRecord != null;
-        incidentAIResponse.setCategory(incidentAIRecord.category());
-        incidentAIResponse.setSeverity(incidentAIRecord.severity());
+        String[] categoryArray = new String[] { incidentAIRecord.category() };
+        List<Category> newCategories = categoryService.getNewCategories(categoryArray, categoryList);
+        if(!newCategories.isEmpty()){
+            List<Category> addedCategories = categoryService.saveCategories(newCategories);
+            incidentAIResponse.setCategory(addedCategories.get(0));
+        } else  {
+            List<Category> existingCategories = categoryService.findExistingCategories(categoryArray, categoryList);
+            incidentAIResponse.setCategory(existingCategories.get(0));
+        }
+        incidentAIResponse.setSeverity(severityService.findExistingSeverity(incidentAIRecord.severity(), severityList).get(0));
         incidentAIResponse.setSummary(incidentAIRecord.summary());
         return incidentAIResponse;
     }

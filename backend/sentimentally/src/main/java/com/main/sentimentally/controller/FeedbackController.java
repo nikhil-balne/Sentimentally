@@ -13,12 +13,13 @@ import java.util.List;
 @RestController
 @RequestMapping("/feedbacks")
 @AllArgsConstructor
+@RequestMapping("/feedbacks")
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
     // TODO: Need to accept date input
-    @GetMapping("/filter")
+    @GetMapping("/")
     public List<Feedback> getAnalysedFeedback(
             @RequestParam(value = "categoryId", required = false) Integer categoryId,
             @RequestParam(value = "propertyId", required = false) String propertyId,
