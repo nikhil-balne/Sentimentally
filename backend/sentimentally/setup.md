@@ -1,7 +1,10 @@
+# Setting Up PostgreSQL Database and Backend
 
-# Setting Up PostgreSQL Database and User via pgAdmin
+This guide walks you through creating a PostgreSQL database and backend.
 
-This guide walks you through creating a PostgreSQL database and user account using pgAdmin.
+# 1 Setting Up PostgreSQL Database and User via pgAdmin
+
+creating a PostgreSQL database and user account using pgAdmin.
 
 ## 🔧 Connection Details
 
@@ -63,9 +66,9 @@ Make sure PostgreSQL is running and your app has access to `localhost:5432`.
 
 ---
 
-# Setting Up database connection and running backend application
+# 2 Setting Up database connection and running backend application
 
-This guide walks you through setting Up database connection and running backend spring application using intellij.
+Setting Up database connection and running backend spring application using intellij.
 
 ## Defining source folder
 
@@ -96,3 +99,7 @@ sentimentally/
 ├── pom.xml
 
 ```
+
+## Running the application
+
+- Navigate to SentimentallyApplication.java file click the run button available in the left or top menu.
