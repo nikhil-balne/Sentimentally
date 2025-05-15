@@ -17,7 +17,6 @@ public class FeedbackController {
 
     private final FeedbackService feedbackService;
 
-    // TODO: Need to accept date input
     @GetMapping("/")
     public List<Feedback> getAnalysedFeedback(
             @RequestParam(value = "categoryId", required = false) Integer categoryId,
