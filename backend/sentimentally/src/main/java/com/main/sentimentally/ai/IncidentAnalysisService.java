@@ -2,9 +2,11 @@ package com.main.sentimentally.ai;
 
 import com.main.sentimentally.dto.IncidentAIResponse;
 import com.main.sentimentally.entity.Category;
+import com.main.sentimentally.entity.Property;
 import com.main.sentimentally.entity.Severity;
 import com.main.sentimentally.record.IncidentAIRecord;
 import com.main.sentimentally.service.CategoryService;
+import com.main.sentimentally.service.PropertyService;
 import com.main.sentimentally.service.SeverityService;
 import com.main.sentimentally.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -28,14 +30,17 @@ public class IncidentAnalysisService {
 
     private final SeverityService severityService;
 
-    public IncidentAIResponse analyseData(String incidentText){
+    private  final PropertyService propertyService;
+
+    public IncidentAIResponse analyseData(String incidentText, String propertyId){
+        Property property = propertyService.getProperty(propertyId);
         String template =
                 """
                     You are an intelligent incident classification engine. Given an incident report or description, analyze the content carefully and return a structured JSON response. Your task is to identify:
                     1. Category – Choose the most relevant category from the following list:{categories}
                     If none of these categories are suitable, generate a new relevant category as a string.
                     2. Severity – Assess the severity of the incident based on urgency, impact, and tone of the incident using these levels:{levels}.
-                    3. Summary – Generate a concise and accurate summary of the incident in 1–2 sentences, capturing the key issue.
+                    3. Summary – Generate a concise and accurate summary of the incident in 3–4 sentences, capturing the key issue.
                     Input Format:
                     You will receive an unstructured text describing an incident.
                     Output Format:
@@ -63,7 +68,7 @@ public class IncidentAnalysisService {
         var outputParser = new BeanOutputConverter<>(IncidentAIRecord.class);
         String format = outputParser.getFormat();
         Message message = new SystemPromptTemplate(template).createMessage(
-                Map.of("categories", categories, "levels", levels, "incident", incidentText, "format", format)
+                Map.of("categories", categories, "levels", levels, "incident", property.getIncidentSummary()+incidentText, "format", format)
         );
         Prompt prompt = new Prompt(List.of(message));
         String generation = chatModel
@@ -84,6 +89,8 @@ public class IncidentAnalysisService {
         }
         incidentAIResponse.setSeverity(severityService.findExistingSeverity(incidentAIRecord.severity(), severityList).get(0));
         incidentAIResponse.setSummary(incidentAIRecord.summary());
+        property.setIncidentSummary(incidentAIRecord.summary());
+        propertyService.saveProperty(property);
         return incidentAIResponse;
     }
 }

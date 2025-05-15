@@ -35,7 +35,7 @@ public class IncidentController {
         incident.setProperty(property);
         incident.setIsResolved(false);
         incident.setCreatedTsz(OffsetDateTime.now());
-        IncidentAIResponse incidentAIResponse = incidentAnalysisService.analyseData(incidentDTO.getIncidentText());
+        IncidentAIResponse incidentAIResponse = incidentAnalysisService.analyseData(incidentDTO.getIncidentText(), incidentDTO.getPropertyId());
         incident.setCategory(incidentAIResponse.getCategory());
         incident.setSeverity(incidentAIResponse.getSeverity());
         return incidentService.saveIncident(incident);

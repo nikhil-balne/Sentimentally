@@ -13,7 +13,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/feedbacks")
 @AllArgsConstructor
-@RequestMapping("/feedbacks")
 public class FeedbackController {
 
     private final FeedbackService feedbackService;
