@@ -13,8 +13,9 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class AnalysedFeedback {
+public class Feedback {
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     @Column(nullable = false)

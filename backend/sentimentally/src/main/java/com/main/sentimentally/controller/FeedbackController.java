@@ -1,6 +1,6 @@
 package com.main.sentimentally.controller;
 
-import com.main.sentimentally.entity.AnalysedFeedback;
+import com.main.sentimentally.entity.Feedback;
 import com.main.sentimentally.service.FeedbackService;
 import lombok.AllArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -17,7 +17,7 @@ public class FeedbackController {
 
     // TODO: Need to accept date input
     @GetMapping("/filter")
-    public List<AnalysedFeedback> getAnalysedFeedback(
+    public List<Feedback> getAnalysedFeedback(
             @RequestParam("categoryId") Integer categoryId,
             @RequestParam("propertyId") String propertyId) {
 
