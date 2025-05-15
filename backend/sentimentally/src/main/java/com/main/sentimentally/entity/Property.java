@@ -9,39 +9,41 @@ import lombok.Setter;
 @Getter
 @Setter
 public class Property {
-    @Id
-    private String id;
 
-    @Column(nullable = false, length = 100)
-    private String name;
+	@Id
+	private String id;
 
-    @Column(length = 255)
-    private String description;
+	@Column(nullable = false, length = 100)
+	private String name;
 
-    @Column(nullable = false, length = 50)
-    private String coordinates;
+	@Column(length = 255)
+	private String description;
 
-    @ManyToOne
-    @JoinColumn(name = "brand_id", nullable = false)
-    private Brand brand;
+	@Column(nullable = false, length = 50)
+	private String coordinates;
 
-    @Column(nullable = false, length = 255)
-    private String state;
+	@ManyToOne
+	@JoinColumn(name = "brand_id", nullable = false)
+	private Brand brand;
 
-    @Column(nullable = false, length = 255)
-    private String district;
+	@Column(nullable = false, length = 255)
+	private String state;
 
-    private String imageUrl;
+	@Column(nullable = false, length = 255)
+	private String district;
 
-    @Column(length = 255)
-    private String adminEmail;
+	private String imageUrl;
 
-    @Column(nullable = false, length = 255)
-    private String incidentSummary;
+	@Column(length = 255)
+	private String adminEmail;
 
-    @Column(nullable = false, length = 255)
-    private String feedbackSummary;
+	@Column(nullable = false, length = 255)
+	private String incidentSummary;
 
-    @Column(nullable = false)
-    private int feedbackRating;
+	@Column(nullable = false, length = 255)
+	private String feedbackSummary;
+
+	@Column(nullable = false)
+	private int feedbackRating;
+
 }

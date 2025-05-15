@@ -13,21 +13,23 @@ import java.util.List;
 @AllArgsConstructor
 public class IncidentService {
 
-    private final IncidentRepository incidentRepository;
+	private final IncidentRepository incidentRepository;
 
-    public List<Incident> getAllIncidents() {
-        return incidentRepository.findAll();
-    }
+	public List<Incident> getAllIncidents() {
+		return incidentRepository.findAll();
+	}
 
-    public Incident saveIncident(Incident newIncident){
-        return  incidentRepository.save(newIncident);
-    }
+	public Incident saveIncident(Incident newIncident) {
+		return incidentRepository.save(newIncident);
+	}
 
-    public Incident resolveIncident(ResolveIncidentDTO incidentDTO) {
-        Incident incident = incidentRepository.findByIdAndPropertyId(incidentDTO.getIncidentId(), incidentDTO.getPropertyId())
-                .orElseThrow(() -> new IllegalArgumentException("Incident not found"));
+	public Incident resolveIncident(ResolveIncidentDTO incidentDTO) {
+		Incident incident = incidentRepository
+			.findByIdAndPropertyId(incidentDTO.getIncidentId(), incidentDTO.getPropertyId())
+			.orElseThrow(() -> new IllegalArgumentException("Incident not found"));
 
-        incident.setIsResolved(true);
-        return incidentRepository.save(incident);
-    }
+		incident.setIsResolved(true);
+		return incidentRepository.save(incident);
+	}
+
 }

@@ -15,16 +15,16 @@ import java.util.List;
 @AllArgsConstructor
 public class FeedbackController {
 
-    private final FeedbackService feedbackService;
+	private final FeedbackService feedbackService;
 
-    @GetMapping("/")
-    public List<Feedback> getAnalysedFeedback(
-            @RequestParam(value = "categoryId", required = false) Integer categoryId,
-            @RequestParam(value = "propertyId", required = false) String propertyId,
-            @RequestParam(value = "state", required = false) String state,
-            @RequestParam(value = "brand", required = false) String brandId,
-            @RequestParam(value = "date", defaultValue = "1W") String relativeDate) {
+	@GetMapping("/")
+	public List<Feedback> getAnalysedFeedback(@RequestParam(value = "categoryId", required = false) Integer categoryId,
+			@RequestParam(value = "propertyId", required = false) String propertyId,
+			@RequestParam(value = "state", required = false) String state,
+			@RequestParam(value = "brand", required = false) String brandId,
+			@RequestParam(value = "date", defaultValue = "1W") String relativeDate) {
 
-        return feedbackService.getFilteredFeedbacks(categoryId, propertyId, state, brandId, relativeDate);
-    }
+		return feedbackService.getFilteredFeedbacks(categoryId, propertyId, state, brandId, relativeDate);
+	}
+
 }

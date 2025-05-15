@@ -9,5 +9,6 @@ import java.util.Optional;
 @Repository
 public interface IncidentRepository extends JpaRepository<Incident, Long> {
 
-    Optional<Incident> findByIdAndPropertyId(Long incidentId, String propertyId);
+	Optional<Incident> findByIdAndPropertyId(Long incidentId, String propertyId);
+
 }

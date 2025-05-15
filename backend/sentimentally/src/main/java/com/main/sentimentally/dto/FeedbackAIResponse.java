@@ -8,7 +8,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class FeedbackAIResponse {
-    private String category;
-    private int rating;
-    private String summary;
+
+	private String category;
+
+	private int rating;
+
+	private String summary;
+
 }

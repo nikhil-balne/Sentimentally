@@ -14,10 +14,11 @@ import java.util.List;
 @RequestMapping("/properties")
 public class PropertyController {
 
-    private final PropertyService propertyService;
+	private final PropertyService propertyService;
 
-    @GetMapping("/")
-    public List<Property> getAllProperties() {
-        return propertyService.getAllProperties();
-    }
+	@GetMapping("/")
+	public List<Property> getAllProperties() {
+		return propertyService.getAllProperties();
+	}
+
 }

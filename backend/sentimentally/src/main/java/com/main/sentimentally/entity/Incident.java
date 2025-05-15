@@ -11,28 +11,30 @@ import java.time.OffsetDateTime;
 @Getter
 @Setter
 public class Incident {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
-    private String incidentText;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @ManyToOne
-    @JoinColumn(name = "severity_id", nullable = false)
-    private Severity severity;
+	@Column(nullable = false)
+	private String incidentText;
 
-    @ManyToOne
-    @JoinColumn(name = "category_id", nullable = false)
-    private Category category;
+	@ManyToOne
+	@JoinColumn(name = "severity_id", nullable = false)
+	private Severity severity;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+	@ManyToOne
+	@JoinColumn(name = "category_id", nullable = false)
+	private Category category;
 
-    @Column(nullable = false)
-    private Boolean isResolved = false;
+	@ManyToOne
+	@JoinColumn(name = "property_id", nullable = false)
+	private Property property;
 
-    @Column(name = "created_tsz", nullable = false)
-    private OffsetDateTime createdTsz;
+	@Column(nullable = false)
+	private Boolean isResolved = false;
+
+	@Column(name = "created_tsz", nullable = false)
+	private OffsetDateTime createdTsz;
+
 }

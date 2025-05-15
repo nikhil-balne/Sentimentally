@@ -10,7 +10,11 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class IncidentAIResponse {
-    private Category category;
-    private Severity severity;
-    private String summary;
+
+	private Category category;
+
+	private Severity severity;
+
+	private String summary;
+
 }

@@ -11,9 +11,10 @@ import java.util.List;
 @AllArgsConstructor
 public class BrandService {
 
-    private final BrandRepository brandRepository;
+	private final BrandRepository brandRepository;
 
-    public List<Brand> getAllBrands(){
-        return  brandRepository.findAll();
-    }
+	public List<Brand> getAllBrands() {
+		return brandRepository.findAll();
+	}
+
 }

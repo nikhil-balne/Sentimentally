@@ -12,18 +12,19 @@ import java.util.List;
 @AllArgsConstructor
 public class PropertyService {
 
-    private final PropertyRepository propertyRepository;
+	private final PropertyRepository propertyRepository;
 
-    public List<Property> getAllProperties() {
-        return propertyRepository.findAll();
-    }
+	public List<Property> getAllProperties() {
+		return propertyRepository.findAll();
+	}
 
-    public Property getProperty(String id) {
-        return propertyRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Property not found with id: " + id));
-    }
+	public Property getProperty(String id) {
+		return propertyRepository.findById(id)
+			.orElseThrow(() -> new EntityNotFoundException("Property not found with id: " + id));
+	}
 
-    public Property saveProperty(Property property){
-        return propertyRepository.save(property);
-    }
+	public Property saveProperty(Property property) {
+		return propertyRepository.save(property);
+	}
+
 }

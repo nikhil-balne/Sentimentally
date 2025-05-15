@@ -14,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class SeverityController {
 
-    private final SeverityService severityService;
+	private final SeverityService severityService;
 
-    @GetMapping("/")
-    public List<Severity> getAllSeverities() {
-        return severityService.getAllSeverities();
-    }
+	@GetMapping("/")
+	public List<Severity> getAllSeverities() {
+		return severityService.getAllSeverities();
+	}
+
 }

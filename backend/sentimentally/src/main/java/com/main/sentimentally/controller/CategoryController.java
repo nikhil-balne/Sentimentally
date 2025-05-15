@@ -14,10 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class CategoryController {
 
-    private final CategoryService categoryService;
+	private final CategoryService categoryService;
 
-    @GetMapping("/")
-    public List<Category> getAllCategories() {
-        return categoryService.getAllCategories();
-    }
+	@GetMapping("/")
+	public List<Category> getAllCategories() {
+		return categoryService.getAllCategories();
+	}
+
 }

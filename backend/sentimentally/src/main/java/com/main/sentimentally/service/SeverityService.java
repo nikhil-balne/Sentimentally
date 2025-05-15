@@ -12,13 +12,16 @@ import java.util.stream.Collectors;
 @AllArgsConstructor
 public class SeverityService {
 
-    private  final SeverityRepository severityRepository;
+	private final SeverityRepository severityRepository;
 
-    public List<Severity> getAllSeverities(){return severityRepository.findAll();}
+	public List<Severity> getAllSeverities() {
+		return severityRepository.findAll();
+	}
 
-    public List<Severity> findExistingSeverity(String severity, List<Severity> SeverityList) {
-        return SeverityList.stream()
-                .filter(sev -> Objects.equals(sev.getName(), severity))
-                .collect(Collectors.toList());
-    }
+	public List<Severity> findExistingSeverity(String severity, List<Severity> SeverityList) {
+		return SeverityList.stream()
+			.filter(sev -> Objects.equals(sev.getName(), severity))
+			.collect(Collectors.toList());
+	}
+
 }

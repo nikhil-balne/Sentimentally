@@ -8,7 +8,9 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ResolveIncidentDTO {
-    private Long incidentId;
 
-    private String propertyId;
+	private Long incidentId;
+
+	private String propertyId;
+
 }

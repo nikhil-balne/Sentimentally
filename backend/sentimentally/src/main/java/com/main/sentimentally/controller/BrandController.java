@@ -14,8 +14,11 @@ import java.util.List;
 @AllArgsConstructor
 public class BrandController {
 
-    private final BrandService brandService;
+	private final BrandService brandService;
 
-    @GetMapping("/")
-    public List<Brand> getAllBrands(){return brandService.getAllBrands();}
+	@GetMapping("/")
+	public List<Brand> getAllBrands() {
+		return brandService.getAllBrands();
+	}
+
 }

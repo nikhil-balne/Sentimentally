@@ -15,9 +15,10 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Severity {
 
-    @Id
-    private Integer id;
+	@Id
+	private Integer id;
 
-    @Column(nullable = false, length = 50)
-    private String name;
+	@Column(nullable = false, length = 50)
+	private String name;
+
 }

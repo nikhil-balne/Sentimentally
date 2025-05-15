@@ -12,21 +12,24 @@ import java.util.List;
 @AllArgsConstructor
 public class FeedbackService {
 
-    private final FeedbackRepository feedbackRepository;
+	private final FeedbackRepository feedbackRepository;
 
-    public OffsetDateTime parseDateRange(String range) {
-        OffsetDateTime now = OffsetDateTime.now();
-        return switch (range.toUpperCase()) {
-            case "1D" -> now.minusDays(1);
-            case "1W" -> now.minusWeeks(1);
-            case "1M" -> now.minusMonths(1);
-            default -> throw new IllegalArgumentException("Invalid date range: " + range);
-        };
-    }
+	public OffsetDateTime parseDateRange(String range) {
+		OffsetDateTime now = OffsetDateTime.now();
+		return switch (range.toUpperCase()) {
+			case "1D" -> now.minusDays(1);
+			case "1W" -> now.minusWeeks(1);
+			case "1M" -> now.minusMonths(1);
+			default -> throw new IllegalArgumentException("Invalid date range: " + range);
+		};
+	}
 
-    public List<Feedback> getFilteredFeedbacks(Integer categoryId, String propertyId, String state, String brandId, String relativeDate) {
-        OffsetDateTime startDate = parseDateRange(relativeDate);
+	public List<Feedback> getFilteredFeedbacks(Integer categoryId, String propertyId, String state, String brandId,
+			String relativeDate) {
+		OffsetDateTime startDate = parseDateRange(relativeDate);
 
-        return feedbackRepository.findFeedbackByCategoryIdAndPropertyId(categoryId, propertyId, state, brandId, startDate);
-    }
+		return feedbackRepository.findFeedbackByCategoryIdAndPropertyId(categoryId, propertyId, state, brandId,
+				startDate);
+	}
+
 }

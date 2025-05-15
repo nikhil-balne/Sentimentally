@@ -14,24 +14,25 @@ import java.util.List;
 @Setter
 @NoArgsConstructor
 public class Feedback {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
 
-    @Column(nullable = false)
-    private String feedbackText;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String categoryIds;
+	@Column(nullable = false)
+	private String feedbackText;
 
-    @Column(nullable = false)
-    private int rating;
+	@Column(nullable = false)
+	private String categoryIds;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+	@Column(nullable = false)
+	private int rating;
 
-    @Column(nullable = false)
-    private OffsetDateTime createdTsz;
+	@ManyToOne
+	@JoinColumn(name = "property_id", nullable = false)
+	private Property property;
+
+	@Column(nullable = false)
+	private OffsetDateTime createdTsz;
 
 }
