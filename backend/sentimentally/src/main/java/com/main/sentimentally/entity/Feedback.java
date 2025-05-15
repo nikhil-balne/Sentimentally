@@ -16,13 +16,13 @@ import java.util.List;
 public class Feedback {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private long id;
+    private Long id;
 
     @Column(nullable = false)
     private String feedbackText;
 
-    @ElementCollection
-    private List<Integer> categoryIds;
+    @Column(nullable = false)
+    private String categoryIds;
 
     @Column(nullable = false)
     private int rating;
