@@ -7,11 +7,16 @@ import com.main.sentimentally.dto.FeedbackListDTO;
 import com.main.sentimentally.entity.Feedback;
 import com.main.sentimentally.entity.InputFeedback;
 import com.main.sentimentally.entity.Property;
+import com.main.sentimentally.service.FeedbackImportService;
 import com.main.sentimentally.service.FeedbackService;
+import com.main.sentimentally.service.PropertyService;
 import lombok.AllArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.OffsetDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -22,6 +27,8 @@ public class FeedbackController {
 	private final FeedbackService feedbackService;
 
 	private final FeedbackAnalysisService feedbackAnalysisService;
+
+	private final FeedbackImportService feedbackImportService;
 
 	@GetMapping("/")
 	public FeedbackListDTO getAnalysedFeedback(@RequestParam(value = "categoryId", required = false) Integer categoryId,
@@ -60,6 +67,22 @@ public class FeedbackController {
 		}
 		catch (Exception e) {
 			return "An error occurred while processing feedback data";
+		}
+	}
+
+	@PostMapping(path = "/upload", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+	public String uploadAndProcessFeedback(
+			@RequestParam(value = "bazaarVoiceFile", required = false) MultipartFile bazaarVoiceFile,
+			@RequestParam(value = "googleReviewsFile", required = false) MultipartFile googleReviewsFile) {
+
+		try {
+			// Clear existing input data
+			feedbackAnalysisService.analyzeInputData(feedbackImportService.importFeedbackDataFromFileUploads(bazaarVoiceFile, googleReviewsFile));
+			return "Feedback imported and processed successfully.";
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			return "Failed to import or process feedback: " + e.getMessage();
 		}
 	}
 

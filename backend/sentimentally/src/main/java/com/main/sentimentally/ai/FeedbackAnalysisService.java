@@ -161,6 +161,11 @@ public class FeedbackAnalysisService {
 		List<InputFeedback> feedbackInputList = feedbackImportService.importFeedbackDataFromOnlineSources();
 
 		// Create an ExecutorService to manage threads
+		analyzeInputData(feedbackInputList);
+
+	}
+
+	public void analyzeInputData(List<InputFeedback> feedbackInputList) throws Exception {
 		ExecutorService executorService = Executors.newFixedThreadPool(15);
 
 		List<Future<Feedback>> futureFeedbacks = new ArrayList<>();

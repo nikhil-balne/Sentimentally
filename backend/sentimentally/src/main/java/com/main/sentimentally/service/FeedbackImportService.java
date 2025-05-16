@@ -7,41 +7,58 @@ import com.main.sentimentally.dto.GoogleReviewsResponse;
 import com.main.sentimentally.entity.InputFeedback;
 import com.main.sentimentally.entity.Property;
 import com.main.sentimentally.repository.InputFeedbackRepository;
-import lombok.RequiredArgsConstructor;
+import lombok.AllArgsConstructor;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
-@RequiredArgsConstructor
+@AllArgsConstructor
 public class FeedbackImportService {
 
-	private final InputFeedbackRepository inputFeedbackRepository;
+	private InputFeedbackRepository inputFeedbackRepository;
 
-	private final ObjectMapper objectMapper;
+	private ObjectMapper objectMapper;
+
+	@Transactional
+	public List<InputFeedback> importFeedbackDataFromFileUploads(MultipartFile bazaarVoiceFile, MultipartFile googleReviewsFile) throws Exception {
+		// Delete existing data
+		inputFeedbackRepository.deleteAll();
+
+		List<InputFeedback> allFeedback = new ArrayList<>();
+
+		if (bazaarVoiceFile != null && !bazaarVoiceFile.isEmpty()) {
+			allFeedback.addAll(parseBazaarVoiceFile(bazaarVoiceFile));
+		}
+
+		if (googleReviewsFile != null && !googleReviewsFile.isEmpty()) {
+			allFeedback.addAll(parseGoogleReviewsFile(googleReviewsFile));
+		}
+
+		return inputFeedbackRepository.saveAll(allFeedback);
+	}
 
 	@Transactional
 	public List<InputFeedback> importFeedbackDataFromOnlineSources() throws Exception {
 		// Delete existing data
 		inputFeedbackRepository.deleteAll();
+
 		List<InputFeedback> allFeedback = new ArrayList<>();
 		allFeedback.addAll(loadFromBazaarVoice());
 		allFeedback.addAll(loadFromGoogleReviews());
-		// add new json data
-		var test = inputFeedbackRepository.saveAll(allFeedback);
-		return test;
+
+		return inputFeedbackRepository.saveAll(allFeedback);
 	}
 
-	private List<InputFeedback> loadFromBazaarVoice() throws Exception {
-		InputStream input = new ClassPathResource("bazaar_voice_response.json").getInputStream();
-		List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
-		});
+	// Refactored methods to convert responses into InputFeedback
+	private List<InputFeedback> convertBazaarVoiceResponses(List<BazaarVoiceResponse> responses) {
 		List<InputFeedback> feedbackList = new ArrayList<>();
-
 		for (BazaarVoiceResponse r : responses) {
 			InputFeedback feedback = new InputFeedback();
 			feedback.setFeedbackText(r.getReviewData());
@@ -52,16 +69,11 @@ public class FeedbackImportService {
 			feedback.setProperty(property);
 			feedbackList.add(feedback);
 		}
-
 		return feedbackList;
 	}
 
-	private List<InputFeedback> loadFromGoogleReviews() throws Exception {
-		InputStream input = new ClassPathResource("google_reviews_response.json").getInputStream();
-		List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
-		});
+	private List<InputFeedback> convertGoogleReviewsResponses(List<GoogleReviewsResponse> responses) {
 		List<InputFeedback> feedbackList = new ArrayList<>();
-
 		for (GoogleReviewsResponse r : responses) {
 			InputFeedback feedback = new InputFeedback();
 			feedback.setFeedbackText(r.getReview());
@@ -72,8 +84,31 @@ public class FeedbackImportService {
 			feedback.setProperty(property);
 			feedbackList.add(feedback);
 		}
-
 		return feedbackList;
 	}
 
+	// Parsing methods
+	private List<InputFeedback> parseBazaarVoiceFile(MultipartFile file) throws IOException {
+		List<BazaarVoiceResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {});
+		return convertBazaarVoiceResponses(responses);
+	}
+
+	private List<InputFeedback> parseGoogleReviewsFile(MultipartFile file) throws IOException {
+		List<GoogleReviewsResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {});
+		return convertGoogleReviewsResponses(responses);
+	}
+
+	// Loading from local JSON files
+	private List<InputFeedback> loadFromBazaarVoice() throws Exception {
+		InputStream input = new ClassPathResource("bazaar_voice_response.json").getInputStream();
+		List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
+		return convertBazaarVoiceResponses(responses);
+	}
+
+	private List<InputFeedback> loadFromGoogleReviews() throws Exception {
+		InputStream input = new ClassPathResource("google_reviews_response.json").getInputStream();
+		List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
+		return convertGoogleReviewsResponses(responses);
+	}
 }
+
