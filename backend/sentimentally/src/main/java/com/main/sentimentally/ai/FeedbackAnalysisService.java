@@ -45,11 +45,13 @@ public class FeedbackAnalysisService {
 				    If none of these categories are suitable, generate a new relevant categories as a string as required.
 				    2. Rating – Assess the feedback based on impact, tone and categories and generate a rating out of 5 then compare the generated rating with the user provided rating and generate a final appropriate rating.
 				    3. Summary – Generate a concise and accurate summary of the feedback in 1–2 sentences, capturing the key issue.
+				    4. propertyRating - Generate a final rating for the property based on the current property rating given and the rating generated for the current feedback give more weightage to current property rating
+				    5. propertySummary - Generate a final summary for the property based on the current property summary given and the summary generated for the current feedback.
 				    Input Format:
 				    You will receive an unstructured text describing an feedback.
 				    Output Format:
 				    Return the result in JSON format with the following structure: category, rating and summary
-				    Now, process the following user provided feedback and rating: feedback: {feedbackinput}, rating : {ratinginput}
+				    Now, process the following user provided feedback and rating: feedback: {feedbackinput}, rating : {ratinginput} current_property_summary: {current_property_summary_input} current_property_rating: {current_property_rating_input}
 				""";
 		List<Category> categoryList = categoryService.getAllCategories();
 		String categories = StringUtils
@@ -58,8 +60,10 @@ public class FeedbackAnalysisService {
 		FeedbackAIRecord feedbackAIRecord = chatClient.prompt()
 			.user(u -> u.text(template)
 				.param("categoriesinput", categories)
-				.param("feedbackinput", property.getIncidentSummary() + feedbackText)
-				.param("ratinginput", rating))
+				.param("feedbackinput", feedbackText)
+				.param("ratinginput", rating)
+				.param("current_property_rating_input", property.getFeedbackRating())
+				.param("current_property_summary_input", property.getFeedbackSummary()))
 			.call()
 			.entity(FeedbackAIRecord.class);
 		assert feedbackAIRecord != null;
@@ -80,8 +84,8 @@ public class FeedbackAnalysisService {
 		if (property.getIncidentSummary() == null || property.getIncidentSummary().isEmpty()) {
 			property.setIncidentSummary("");
 		}
-		property.setFeedbackSummary(feedbackAIRecord.summary());
-		property.setFeedbackRating(feedbackAIRecord.rating());
+		property.setFeedbackSummary(feedbackAIRecord.propertySummary());
+		property.setFeedbackRating(feedbackAIRecord.propertyRating());
 		propertyService.saveProperty(property);
 		return feedbackAIResponse;
 	}
@@ -138,6 +142,10 @@ public class FeedbackAnalysisService {
 			.call()
 			.entity(FeedbackListAIRecord.class);
 		assert feedbackListAIRecord != null;
+		List<Category> newCategories = categoryService.getNewCategories(feedbackListAIRecord.xPoints(), categoryList);
+		if (!newCategories.isEmpty()) {
+			categoryService.saveCategories(newCategories);
+		}
 		feedbackListAIResponse.setImprovements(feedbackListAIRecord.improvements());
 		feedbackListAIResponse.setSummary(feedbackListAIRecord.summary());
 		feedbackListAIResponse.setRating(feedbackListAIRecord.rating());
@@ -174,7 +182,6 @@ public class FeedbackAnalysisService {
 				return feedbackToSave;
 			}));
 		}
-
 		List<Feedback> feedbacksToSave = new ArrayList<>();
 		for (Future<Feedback> future : futureFeedbacks) {
 			try {

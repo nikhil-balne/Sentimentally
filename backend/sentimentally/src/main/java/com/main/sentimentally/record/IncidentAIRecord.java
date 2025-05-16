@@ -1,4 +1,4 @@
 package com.main.sentimentally.record;
 
-public record IncidentAIRecord(String category, String severity, String summary) {
+public record IncidentAIRecord(String category, String severity, String summary, String propertySummary) {
 }

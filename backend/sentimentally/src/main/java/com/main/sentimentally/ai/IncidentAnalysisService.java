@@ -35,11 +35,12 @@ public class IncidentAnalysisService {
 				    If none of these categories are suitable, generate a new relevant category as a string.
 				    2. Severity – Assess the severity of the incident based on urgency, impact, and tone of the incident using these levels:{levelsinput}.
 				    3. Summary – Generate a concise and accurate summary of the incident in 3–4 sentences, capturing the key issue.
+				    4. propertySummary - Generate a final summary for the property based on the current property summary given and the summary generated for the current feedback.
 				    Input Format:
 				    You will receive an unstructured text describing an incident.
 				    Output Format:
 				    Return the result in JSON format with the following fields: category, severity and summary
-				    Now, process the following incident: {incidentinput}
+				    Now, process the following incident: {incidentinput} and propertySummary: {property_summary_input}
 				""";
 		List<Category> categoryList = categoryService.getAllCategories();
 		List<Severity> severityList = severityService.getAllSeverities();
@@ -52,7 +53,8 @@ public class IncidentAnalysisService {
 			.user(u -> u.text(template)
 				.param("categoriesinput", categories)
 				.param("levelsinput", levels)
-				.param("incidentinput", property.getIncidentSummary() + incidentText))
+				.param("incidentinput", incidentText)
+				.param("property_summary_input", property.getIncidentSummary()))
 			.call()
 			.entity(IncidentAIRecord.class);
 		assert incidentAIRecord != null;
@@ -68,7 +70,7 @@ public class IncidentAnalysisService {
 		}
 		incidentAIResponse
 			.setSeverity(severityService.findExistingSeverity(incidentAIRecord.severity(), severityList).get(0));
-		incidentAIResponse.setSummary(incidentAIRecord.summary());
+		incidentAIResponse.setSummary(incidentAIRecord.propertySummary());
 		if (property.getIncidentSummary() == null || property.getIncidentSummary().isEmpty()) {
 			property.setFeedbackSummary("");
 		}
