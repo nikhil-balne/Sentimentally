@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface InputFeedbackRepository extends JpaRepository<InputFeedback, Long> {
+
 }

@@ -10,9 +10,15 @@ import java.time.OffsetDateTime;
 @NoArgsConstructor
 @AllArgsConstructor
 public class GoogleReviewsResponse {
-    private String propertyId;
-    private String userId;
-    private String review;
-    private int rating;
-    private OffsetDateTime date;
+
+	private String propertyId;
+
+	private String userId;
+
+	private String review;
+
+	private int rating;
+
+	private OffsetDateTime date;
+
 }

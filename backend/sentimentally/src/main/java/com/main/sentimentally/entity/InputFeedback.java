@@ -14,20 +14,21 @@ import java.time.OffsetDateTime;
 @Table(name = "input_feedback")
 public class InputFeedback {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Column(nullable = false)
-    private String feedbackText;
+	@Column(nullable = false)
+	private String feedbackText;
 
-    @Column(nullable = false)
-    private int rating;
+	@Column(nullable = false)
+	private int rating;
 
-    @ManyToOne
-    @JoinColumn(name = "property_id", nullable = false)
-    private Property property;
+	@ManyToOne
+	@JoinColumn(name = "property_id", nullable = false)
+	private Property property;
 
-    @Column(nullable = false)
-    private OffsetDateTime createdTsz;
+	@Column(nullable = false)
+	private OffsetDateTime createdTsz;
+
 }

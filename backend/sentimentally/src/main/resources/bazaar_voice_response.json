@@ -1,0 +1,86 @@
+[
+  {
+    "propertyId": "AMACY",
+    "author": "SunshineSeeker",
+    "reviewData": "Great stay with clean rooms and helpful staff. Ideal for business trips.",
+    "rating": 4,
+    "date": "2025-05-10T09:00:00-04:00"
+  },
+  {
+    "propertyId": "AMACY",
+    "author": "BusinessTraveller25",
+    "reviewData": "Convenient location but needs renovation. Overall decent stay.",
+    "rating": 3,
+    "date": "2025-05-08T18:15:00-04:00"
+  },
+  {
+    "propertyId": "MIAEK",
+    "author": "BeachLover123",
+    "reviewData": "Lovely property with a great city view and breakfast options!",
+    "rating": 5,
+    "date": "2025-05-06T14:00:00-04:00"
+  },
+  {
+    "propertyId": "MIAEK",
+    "author": "MiamiExplorer",
+    "reviewData": "Comfortable stay, but noisy street disrupts sleep.",
+    "rating": 3,
+    "date": "2025-05-04T16:30:00-04:00"
+  },
+  {
+    "propertyId": "CHICM",
+    "author": "FlyingHigh22",
+    "reviewData": "Convenient location near the airport, but rooms are outdated.",
+    "rating": 3,
+    "date": "2025-05-02T11:45:00-04:00"
+  },
+  {
+    "propertyId": "CHICM",
+    "author": "TravelJunkie_77",
+    "reviewData": "Good value for the price, solid choice for an overnight stay.",
+    "rating": 4,
+    "date": "2025-05-01T13:00:00-04:00"
+  },
+  {
+    "propertyId": "LAXAH",
+    "author": "ThemeParkFanatic",
+    "reviewData": "Great location for Disneyland, but poor customer service. Marriott has similar issues across locations.",
+    "rating": 2,
+    "date": "2025-05-05T10:20:00-04:00"
+  },
+  {
+    "propertyId": "LAXAH",
+    "author": "TravelerInCalifornia",
+    "reviewData": "Nice amenities, but air conditioning didn’t work. Staff was unresponsive, an ongoing issue across Marriott hotels.",
+    "rating": 3,
+    "date": "2025-05-07T12:30:00-04:00"
+  },
+  {
+    "propertyId": "SFOBG",
+    "author": "GoldenGateExplorer",
+    "reviewData": "Beautiful waterfront location, but service issues persist across Marriott properties.",
+    "rating": 3,
+    "date": "2025-05-09T17:40:00-04:00"
+  },
+  {
+    "propertyId": "SFOBG",
+    "author": "BayAreaExplorer",
+    "reviewData": "Great view, but long check-in times and unresponsive staff are recurring issues across Marriott locations.",
+    "rating": 2,
+    "date": "2025-05-04T12:00:00-04:00"
+  },
+  {
+    "propertyId": "NYCMQ",
+    "author": "CityAdventurer",
+    "reviewData": "Great location, but the service was slow. Similar issues with Marriott properties' staff across locations.",
+    "rating": 2,
+    "date": "2025-05-05T16:00:00-04:00"
+  },
+  {
+    "propertyId": "NYCMQ",
+    "author": "NYCExplorer",
+    "reviewData": "Centrally located, but slow service and unresponsive staff at the front desk. Similar issue across Marriott properties.",
+    "rating": 3,
+    "date": "2025-05-02T19:15:00-04:00"
+  }
+]

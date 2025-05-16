@@ -20,55 +20,60 @@ import java.util.List;
 @RequiredArgsConstructor
 public class FeedbackImportService {
 
-    private final InputFeedbackRepository inputFeedbackRepository;
-    private final ObjectMapper objectMapper;
+	private final InputFeedbackRepository inputFeedbackRepository;
 
-    @Transactional
-    public List<InputFeedback> importFeedbackDataFromOnlineSources() throws Exception {
-        // Delete existing data
-        inputFeedbackRepository.deleteAll();
-        List<InputFeedback> allFeedback = new ArrayList<>();
-        allFeedback.addAll(loadFromBazaarVoice());
-        allFeedback.addAll(loadFromGoogleReviews());
-        // add new json data
-        return inputFeedbackRepository.saveAll(allFeedback);
-    }
+	private final ObjectMapper objectMapper;
 
-    private List<InputFeedback> loadFromBazaarVoice() throws Exception {
-        InputStream input = new ClassPathResource("bazaar_voice_responses.json").getInputStream();
-        List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
-        List<InputFeedback> feedbackList = new ArrayList<>();
+	@Transactional
+	public List<InputFeedback> importFeedbackDataFromOnlineSources() throws Exception {
+		// Delete existing data
+		inputFeedbackRepository.deleteAll();
+		List<InputFeedback> allFeedback = new ArrayList<>();
+		allFeedback.addAll(loadFromBazaarVoice());
+		allFeedback.addAll(loadFromGoogleReviews());
+		// add new json data
+		var test = inputFeedbackRepository.saveAll(allFeedback);
+		return test;
+	}
 
-        for (BazaarVoiceResponse r : responses) {
-            InputFeedback feedback = new InputFeedback();
-            feedback.setFeedbackText(r.getReviewData());
-            feedback.setRating(r.getRating());
-            feedback.setCreatedTsz(r.getDate());
-            Property property = new Property();
-            property.setId(r.getPropertyId());
-            feedback.setProperty(property);
-            feedbackList.add(feedback);
-        }
+	private List<InputFeedback> loadFromBazaarVoice() throws Exception {
+		InputStream input = new ClassPathResource("bazaar_voice_response.json").getInputStream();
+		List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
+		});
+		List<InputFeedback> feedbackList = new ArrayList<>();
 
-        return feedbackList;
-    }
+		for (BazaarVoiceResponse r : responses) {
+			InputFeedback feedback = new InputFeedback();
+			feedback.setFeedbackText(r.getReviewData());
+			feedback.setRating(r.getRating());
+			feedback.setCreatedTsz(r.getDate());
+			Property property = new Property();
+			property.setId(r.getPropertyId());
+			feedback.setProperty(property);
+			feedbackList.add(feedback);
+		}
 
-    private List<InputFeedback> loadFromGoogleReviews() throws Exception {
-        InputStream input = new ClassPathResource("google_reviews_responses.json").getInputStream();
-        List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
-        List<InputFeedback> feedbackList = new ArrayList<>();
+		return feedbackList;
+	}
 
-        for (GoogleReviewsResponse r : responses) {
-            InputFeedback feedback = new InputFeedback();
-            feedback.setFeedbackText(r.getReview());
-            feedback.setRating(r.getRating());
-            feedback.setCreatedTsz(r.getDate());
-            Property property = new Property();
-            property.setId(r.getPropertyId());
-            feedback.setProperty(property);
-            feedbackList.add(feedback);
-        }
+	private List<InputFeedback> loadFromGoogleReviews() throws Exception {
+		InputStream input = new ClassPathResource("google_reviews_response.json").getInputStream();
+		List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
+		});
+		List<InputFeedback> feedbackList = new ArrayList<>();
 
-        return feedbackList;
-    }
+		for (GoogleReviewsResponse r : responses) {
+			InputFeedback feedback = new InputFeedback();
+			feedback.setFeedbackText(r.getReview());
+			feedback.setRating(r.getRating());
+			feedback.setCreatedTsz(r.getDate());
+			Property property = new Property();
+			property.setId(r.getPropertyId());
+			feedback.setProperty(property);
+			feedbackList.add(feedback);
+		}
+
+		return feedbackList;
+	}
+
 }

@@ -32,11 +32,11 @@ public class FeedbackService {
 				startDate);
 	}
 
-	public  Feedback saveFeedback(Feedback feedback){
-		return  feedbackRepository.save(feedback);
+	public Feedback saveFeedback(Feedback feedback) {
+		return feedbackRepository.save(feedback);
 	}
 
-	public  List<Feedback> saveFeedbacks(List<Feedback> feedbacks){
+	public List<Feedback> saveFeedbacks(List<Feedback> feedbacks) {
 		return feedbackRepository.saveAll(feedbacks);
 	}
 

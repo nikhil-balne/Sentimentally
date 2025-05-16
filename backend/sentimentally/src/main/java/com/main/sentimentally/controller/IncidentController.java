@@ -32,18 +32,20 @@ public class IncidentController {
 		return incidentService.resolveIncident(incidentDTO);
 	}
 
-    @PostMapping("/")
-    public  Incident saveIncident(@RequestBody IncidentDTO incidentDTO){
-        Incident incident = new Incident();
-        Property property = new Property();
-        property.setId(incidentDTO.getPropertyId());
-        incident.setIncidentText(incidentDTO.getIncidentText());
-        incident.setProperty(property);
-        incident.setIsResolved(false);
-        incident.setCreatedTsz(OffsetDateTime.now());
-        IncidentAIResponse incidentAIResponse = incidentAnalysisService.analyzeData(incidentDTO.getIncidentText(), incidentDTO.getPropertyId());
-        incident.setCategory(incidentAIResponse.getCategory());
-        incident.setSeverity(incidentAIResponse.getSeverity());
-        return incidentService.saveIncident(incident);
-    }
+	@PostMapping("/")
+	public Incident saveIncident(@RequestBody IncidentDTO incidentDTO) {
+		Incident incident = new Incident();
+		Property property = new Property();
+		property.setId(incidentDTO.getPropertyId());
+		incident.setIncidentText(incidentDTO.getIncidentText());
+		incident.setProperty(property);
+		incident.setIsResolved(false);
+		incident.setCreatedTsz(OffsetDateTime.now());
+		IncidentAIResponse incidentAIResponse = incidentAnalysisService.analyzeData(incidentDTO.getIncidentText(),
+				incidentDTO.getPropertyId());
+		incident.setCategory(incidentAIResponse.getCategory());
+		incident.setSeverity(incidentAIResponse.getSeverity());
+		return incidentService.saveIncident(incident);
+	}
+
 }

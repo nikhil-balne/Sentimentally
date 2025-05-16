@@ -11,6 +11,9 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class FeedbackListDTO {
-    List<Feedback> feedbackList;
-    FeedbackListAIResponse feedbackListAIResponse;
+
+	List<Feedback> feedbackList;
+
+	FeedbackListAIResponse feedbackListAIResponse;
+
 }
