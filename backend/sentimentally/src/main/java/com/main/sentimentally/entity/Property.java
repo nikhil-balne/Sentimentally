@@ -16,7 +16,7 @@ public class Property {
 	@Column(nullable = false, length = 100)
 	private String name;
 
-	@Column(length = 255)
+	@Column
 	private String description;
 
 	@Column(nullable = false, length = 50)
@@ -26,21 +26,21 @@ public class Property {
 	@JoinColumn(name = "brand_id", nullable = false)
 	private Brand brand;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false)
 	private String state;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false)
 	private String district;
 
 	private String imageUrl;
 
-	@Column(length = 255)
+	@Column
 	private String adminEmail;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false)
 	private String incidentSummary;
 
-	@Column(nullable = false, length = 255)
+	@Column(nullable = false)
 	private String feedbackSummary;
 
 	@Column(nullable = false)
