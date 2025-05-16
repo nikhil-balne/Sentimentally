@@ -27,7 +27,8 @@ public class FeedbackImportService {
 	private ObjectMapper objectMapper;
 
 	@Transactional
-	public List<InputFeedback> importFeedbackDataFromFileUploads(MultipartFile bazaarVoiceFile, MultipartFile googleReviewsFile) throws Exception {
+	public List<InputFeedback> importFeedbackDataFromFileUploads(MultipartFile bazaarVoiceFile,
+			MultipartFile googleReviewsFile) throws Exception {
 		// Delete existing data
 		inputFeedbackRepository.deleteAll();
 
@@ -89,26 +90,30 @@ public class FeedbackImportService {
 
 	// Parsing methods
 	private List<InputFeedback> parseBazaarVoiceFile(MultipartFile file) throws IOException {
-		List<BazaarVoiceResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {});
+		List<BazaarVoiceResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {
+		});
 		return convertBazaarVoiceResponses(responses);
 	}
 
 	private List<InputFeedback> parseGoogleReviewsFile(MultipartFile file) throws IOException {
-		List<GoogleReviewsResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {});
+		List<GoogleReviewsResponse> responses = objectMapper.readValue(file.getInputStream(), new TypeReference<>() {
+		});
 		return convertGoogleReviewsResponses(responses);
 	}
 
 	// Loading from local JSON files
 	private List<InputFeedback> loadFromBazaarVoice() throws Exception {
 		InputStream input = new ClassPathResource("bazaar_voice_response.json").getInputStream();
-		List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
+		List<BazaarVoiceResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
+		});
 		return convertBazaarVoiceResponses(responses);
 	}
 
 	private List<InputFeedback> loadFromGoogleReviews() throws Exception {
 		InputStream input = new ClassPathResource("google_reviews_response.json").getInputStream();
-		List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {});
+		List<GoogleReviewsResponse> responses = objectMapper.readValue(input, new TypeReference<>() {
+		});
 		return convertGoogleReviewsResponses(responses);
 	}
-}
 
+}

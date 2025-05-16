@@ -77,10 +77,12 @@ public class FeedbackController {
 
 		try {
 			// Clear existing input data
-			feedbackAnalysisService.analyzeInputData(feedbackImportService.importFeedbackDataFromFileUploads(bazaarVoiceFile, googleReviewsFile));
+			feedbackAnalysisService.analyzeInputData(
+					feedbackImportService.importFeedbackDataFromFileUploads(bazaarVoiceFile, googleReviewsFile));
 			return "Feedback imported and processed successfully.";
 
-		} catch (Exception e) {
+		}
+		catch (Exception e) {
 			e.printStackTrace();
 			return "Failed to import or process feedback: " + e.getMessage();
 		}
