@@ -5,10 +5,12 @@ import com.main.sentimentally.dto.FeedbackListAIInput;
 import com.main.sentimentally.dto.FeedbackListAIResponse;
 import com.main.sentimentally.entity.Category;
 import com.main.sentimentally.entity.Feedback;
+import com.main.sentimentally.entity.InputFeedback;
 import com.main.sentimentally.entity.Property;
 import com.main.sentimentally.record.FeedbackAIRecord;
 import com.main.sentimentally.record.FeedbackListAIRecord;
 import com.main.sentimentally.service.CategoryService;
+import com.main.sentimentally.service.FeedbackImportService;
 import com.main.sentimentally.service.PropertyService;
 import com.main.sentimentally.utils.StringUtils;
 import lombok.AllArgsConstructor;
@@ -27,6 +29,8 @@ public class FeedbackAnalysisService {
 	private final CategoryService categoryService;
 
     private final PropertyService propertyService;
+
+    private final FeedbackImportService feedbackImportService;
 
     public FeedbackAIResponse analyzeData(String feedbackText, int rating, String propertyId){
         Property property = propertyService.getProperty(propertyId);
@@ -132,4 +136,10 @@ public class FeedbackAnalysisService {
         feedbackListAIResponse.setYPoints(feedbackListAIRecord.yPoints());
         return feedbackListAIResponse;
     }
+
+//    public List<InputFeedback> analyzeOnlineScrapedData() throws Exception {
+//        List<InputFeedback> feedbackInputList = feedbackImportService.importFeedbackDataFromOnlineSources();
+//       loop and call analyze method and make a list of the alazyed data and call saveall method from feedbackservice e
+//    expose controller
+//    }
 }

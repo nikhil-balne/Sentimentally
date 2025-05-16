@@ -36,4 +36,8 @@ public class FeedbackService {
 		return  feedbackRepository.save(feedback);
 	}
 
+	public  List<Feedback> saveFeedbacks(List<Feedback> feedbacks){
+		return feedbackRepository.saveAll(feedbacks);
+	}
+
 }

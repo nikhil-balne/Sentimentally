@@ -1,0 +1,37 @@
+[
+  {
+    "propertyId": "ABIRI",
+    "userId": "TravelFanatic123",
+    "review": "Exceptional stay with attentive staff. Highly recommended!",
+    "rating": 5,
+    "date": "2025-05-09T11:20:00-04:00"
+  },
+  {
+    "propertyId": "ABIRI",
+    "userId": "AdventureGirl88",
+    "review": "Enjoyed the spa and pool area. Rooms were decent.",
+    "rating": 4,
+    "date": "2025-05-07T13:10:00-04:00"
+  },
+  {
+    "propertyId": "ABIRI",
+    "userId": "CityExplorer_89",
+    "review": "Check-in was slow and noisy surroundings at night.",
+    "rating": 3,
+    "date": "2025-05-05T15:45:00-04:00"
+  },
+  {
+    "propertyId": "ABIRI",
+    "userId": "SoloNomad22",
+    "review": "Room wasn’t ready on arrival. Not a great experience.",
+    "rating": 2,
+    "date": "2025-05-03T10:00:00-04:00"
+  },
+  {
+    "propertyId": "ABIRI",
+    "userId": "BudgetBackpacker",
+    "review": "Worst hotel stay I've ever had. Avoid it.",
+    "rating": 1,
+    "date": "2025-05-01T08:30:00-04:00"
+  }
+]
