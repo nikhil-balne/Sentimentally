@@ -9,6 +9,7 @@ import com.main.sentimentally.entity.InputFeedback;
 import com.main.sentimentally.entity.Property;
 import com.main.sentimentally.record.FeedbackAIRecord;
 import com.main.sentimentally.record.FeedbackListAIRecord;
+import com.main.sentimentally.repository.InputFeedbackRepository;
 import com.main.sentimentally.service.CategoryService;
 import com.main.sentimentally.service.FeedbackImportService;
 import com.main.sentimentally.service.FeedbackService;
@@ -37,12 +38,15 @@ public class FeedbackAnalysisService {
 
 	private final FeedbackService feedbackService;
 
+	private InputFeedbackRepository inputFeedbackRepository;
+
 	public FeedbackAIResponse analyzeData(String feedbackText, int rating, String propertyId) {
 		Property property = propertyService.getProperty(propertyId);
 		String template = """
 				    You are an intelligent feedback processing engine. Given an feedback report or description, analyze the content carefully and return a structured JSON response. Your task is to identify:
 				    1. Categories – Choose the most relevant categories the feedback may fall into from the following list:{categoriesinput}
-				    If none of these categories are suitable, generate a new relevant categories as a string as required.
+				    If none of these categories are suitable, pick the closest relevant category.
+				    Only generate a new category if it is completely different from the current category.
 				    2. Rating – Assess the feedback based on impact, tone and categories and generate a rating out of 5 then compare the generated rating with the user provided rating and generate a final appropriate rating.
 				    3. Summary – Generate a concise and accurate summary of the feedback in 1–2 sentences, capturing the key issue.
 				    4. propertyRating - Generate a final rating for the property based on the current property rating given and the rating generated for the current feedback give more weightage to current property rating
@@ -168,10 +172,9 @@ public class FeedbackAnalysisService {
 	}
 
 	public void analyzeInputData(List<InputFeedback> feedbackInputList) throws Exception {
-		ExecutorService executorService = Executors.newFixedThreadPool(15);
+		ExecutorService executorService = Executors.newFixedThreadPool(10);
 
 		List<Future<Feedback>> futureFeedbacks = new ArrayList<>();
-
 		// Submit each feedback processing task to the executor
 		for (InputFeedback feedback : feedbackInputList) {
 			futureFeedbacks.add(executorService.submit(() -> {
@@ -184,7 +187,7 @@ public class FeedbackAnalysisService {
 				feedbackToSave.setCategoryIds(analyzedFeedback.getCategory());
 				feedbackToSave.setRating(analyzedFeedback.getRating());
 				feedbackToSave.setProperty(feedback.getProperty());
-				feedbackToSave.setCreatedTsz(OffsetDateTime.now());
+				feedbackToSave.setCreatedTsz(feedback.getCreatedTsz());
 
 				return feedbackToSave;
 			}));
@@ -201,6 +204,9 @@ public class FeedbackAnalysisService {
 		feedbackService.saveFeedbacks(feedbacksToSave);
 
 		executorService.shutdown();
+
+		inputFeedbackRepository.deleteAll();
+
 	}
 
 }
