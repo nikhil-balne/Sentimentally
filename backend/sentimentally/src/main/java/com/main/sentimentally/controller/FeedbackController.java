@@ -40,7 +40,9 @@ public class FeedbackController {
 		List<Feedback> feedbackList = feedbackService.getFilteredFeedbacks(categoryId, propertyId, state, brandId,
 				relativeDate);
 		feedbackListDTO.setFeedbackList(feedbackList);
-		feedbackListDTO.setFeedbackListAIResponse(feedbackAnalysisService.analyzeGroupedData(feedbackList));
+		if (feedbackListDTO.getFeedbackList().size() != 0) {
+			feedbackListDTO.setFeedbackListAIResponse(feedbackAnalysisService.analyzeGroupedData(feedbackList));
+		}
 		return feedbackListDTO;
 	}
 
