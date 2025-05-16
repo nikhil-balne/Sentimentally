@@ -95,6 +95,8 @@ public class FeedbackAnalysisService {
 		promptBuilder.append("You are an AI assistant tasked with analyzing customer feedback data. ");
 		promptBuilder.append("Each feedback entry includes categories, a rating (1 to 5), and a textual comment. ");
 		promptBuilder.append(
+				"Choose the categories only from the from the below supplied categories list do not create new categories");
+		promptBuilder.append(
 				"Analyze the following feedback entries and produce a JSON object with the following structure:\n\n");
 		promptBuilder.append("{\n");
 		promptBuilder.append("  \"summary\": \"A concise summary of the overall feedback.\",\n");
