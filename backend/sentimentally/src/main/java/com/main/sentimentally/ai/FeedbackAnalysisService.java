@@ -45,8 +45,9 @@ public class FeedbackAnalysisService {
 		String template = """
 				    You are an intelligent feedback processing engine. Given an feedback report or description, analyze the content carefully and return a structured JSON response. Your task is to identify:
 				    1. Categories – Choose the most relevant categories the feedback may fall into from the following list:{categoriesinput}
-				    If none of these categories are suitable, pick the closest relevant category.
-				    Only generate a new category if it is completely different from the current category.
+				    If none of these categories are suitable, pick the closest relevant category from the category list.
+				    Generate a new category only if it is completely different from the current category list.
+				    Ignore if the generated category has any similarity in the current category list.
 				    2. Rating – Assess the feedback based on impact, tone and categories and generate a rating out of 5 then compare the generated rating with the user provided rating and generate a final appropriate rating.
 				    3. Summary – Generate a concise and accurate summary of the feedback in 1–2 sentences, capturing the key issue.
 				    4. propertyRating - Generate a final rating for the property based on the current property rating given and the rating generated for the current feedback give more weightage to current property rating
